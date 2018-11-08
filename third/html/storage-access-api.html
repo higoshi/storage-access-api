@@ -13,14 +13,16 @@
   async function start() {
     while (ul.firstChild) ul.removeChild(ul.firstChild)
 
-    let successed = true;
-    await document.requestStorageAccess()
-    .catch(err => {
-      successed = false;
+
+    await new Promise(async resolve => {
+      document.requestStorageAccess().then(() => {
+        appendLog('requestStorageAccess', 'Successed!');
+        resolve();
+      }).catch(() => {
+        appendLog('requestStorageAccess', 'Failed');
+        resolve();
+      });
     });
-
-    appendLog('requestStorageAccess', successed ? 'Successed!' : 'Failed');
-
 
     appendLog('Referrer', document.referrer);
     appendLog('StorageAccessAPI', typeof document.hasStorageAccess === 'function' && document.hasStorageAccess() ? 'Supported!' : 'Unsupported');
