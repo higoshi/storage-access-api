@@ -10,7 +10,9 @@
     ul.appendChild(li);
   }
 
-  function start() {
+  async function start() {
+    await document.requestStorageAccess();
+
     while (ul.firstChild) ul.removeChild(ul.firstChild)
 
     appendLog('Referrer', document.referrer);
