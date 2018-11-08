@@ -11,9 +11,16 @@
   }
 
   async function start() {
-    await document.requestStorageAccess();
-
     while (ul.firstChild) ul.removeChild(ul.firstChild)
+
+    let successed = true;
+    await document.requestStorageAccess()
+    .catch(err => {
+      successed = false;
+    });
+
+    appendLog('requestStorageAccess', successed ? 'Successed!' : 'Failed');
+
 
     appendLog('Referrer', document.referrer);
     appendLog('StorageAccessAPI', typeof document.hasStorageAccess === 'function' && document.hasStorageAccess() ? 'Supported!' : 'Unsupported');
