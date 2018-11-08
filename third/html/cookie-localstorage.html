@@ -11,6 +11,8 @@
 
   function start() {
     while (ul.firstChild) ul.removeChild(ul.firstChild)
+
+    appendLog('Referrer', document.referrer);
     appendLog('StorageAccessAPI', typeof document.hasStorageAccess === 'function' && document.hasStorageAccess() ? 'Supported!' : 'Unsupported');
 
     const prevCookie = document.cookie.split(/;\s?/).find(element => element.indexOf('prevCookie') == 0);
