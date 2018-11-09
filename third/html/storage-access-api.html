@@ -27,17 +27,20 @@
     appendLog('Referrer', document.referrer);
     appendLog('StorageAccessAPI', typeof document.hasStorageAccess === 'function' && document.hasStorageAccess() ? 'Supported!' : 'Unsupported');
 
+    const expires = new Date(Date.now() + 2592000000).toUTCString();
+
     const prevCookie = document.cookie.split(/;\s?/).find(element => element.indexOf('prevCookie') == 0);
     appendLog('PrevCookie', prevCookie ? prevCookie : 'Not Found');
+    if (!prevCookie) document.cookie = `prevCookie=${Math.random()};expires=${expires}`;
 
-    document.cookie = 'cookie=1;';
+    document.cookie = `cookie=1;expires=${expires}`;
     appendLog('Cookie', document.cookie.indexOf('cookie=1') >= 0 ? 'Writable!' : 'Not Writable');
 
     const prevSecureCookie = document.cookie.split(/;\s?/).find(element => element.indexOf('prevSecureCookie') == 0);
     appendLog('PrevSecureCookie', prevSecureCookie ? prevSecureCookie : 'Not Found');
-    if (!prevSecureCookie) document.cookie = 'prevSecureCookie=' + Math.random();
+    if (!prevSecureCookie) document.cookie = `prevSecureCookie=${Math.random()};expires=${expires}`;
 
-    document.cookie = 'secureCookie=4;secure';
+    document.cookie = `secureCookie=4;secure;expires=${expires}`;
     appendLog('SecureCookie', document.cookie.indexOf('secureCookie=4') >= 0 ? 'Writable!' : 'Not Writable');
 
     const prevItem = localStorage.getItem('prevItem');
