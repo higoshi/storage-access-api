@@ -10,11 +10,16 @@
     ul.appendChild(li);
   }
 
-  function start() {
+  async function start() {
     while (ul.firstChild) ul.removeChild(ul.firstChild)
 
     appendLog('Referrer', document.referrer);
-    appendLog('StorageAccessAPI', typeof document.hasStorageAccess === 'function' && document.hasStorageAccess() ? 'Supported!' : 'Unsupported');
+
+
+    appendLog('StorageAccessAPI', typeof document.hasStorageAccess === 'function' ? 'Available!' : 'Not Available');
+
+    const hasStorageAccessed = await document.hasStorageAccess();
+    appendLog('hasStorageAccess', hasStorageAccessed);
 
     const expires = new Date(Date.now() + 2592000000).toUTCString();
 
